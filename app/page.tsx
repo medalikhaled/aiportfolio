@@ -198,48 +198,69 @@ export default function Home() {
 
       {/* Bottom Row - ~30% height */}
       <div className="flex-[0.3] flex flex-col items-center justify-center relative z-10 px-8 pb-8">
-        {/* Search Bar */}
+        {/* Enhanced Input Section */}
         <motion.div
-          className="w-full max-w-2xl mb-8"
+          className="w-full max-w-4xl mb-8 relative z-20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="relative">
-            <motion.input
-              type="text"
-              placeholder="Ask DALI 9000 anything..."
-              className="w-full px-6 py-4 pr-16 bg-background/10 backdrop-blur-lg border border-foreground/30 rounded-full text-foreground placeholder-foreground/60 focus:outline-none focus:border-foreground/60 focus:bg-background/20 transition-all duration-300"
+          <div className="relative group">
+            {/* Glowing border effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            
+            <div className="relative bg-background/15 backdrop-blur-xl border border-foreground/30 rounded-3xl p-1 shadow-2xl">
+              <textarea
+                placeholder="Ask DALI 9000 anything... Share your thoughts, questions, or ideas..."
+                className="w-full h-32 px-8 py-6 pr-20 bg-transparent text-foreground placeholder-foreground/50 focus:outline-none resize-none text-lg leading-relaxed relative z-10"
+                style={{
+                  fontFamily: 'system-ui, -apple-system, sans-serif',
+                }}
+              />
+              
+              {/* Enhanced Send Button */}
+              <button
+                className="absolute right-4 bottom-4 w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 z-10"
+                style={{
+                  boxShadow: "0 8px 25px rgba(59, 130, 246, 0.3)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.boxShadow = "0 0 30px rgba(59, 130, 246, 0.5)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.boxShadow = "0 8px 25px rgba(59, 130, 246, 0.3)";
+                }}
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+                
+                {/* Button glow effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              </button>
+              
+              {/* Character count or status indicator */}
+              <div className="absolute left-8 bottom-4 text-xs text-foreground/40 font-medium pointer-events-none">
+                Ready to assist
+              </div>
+            </div>
+            
+            {/* Subtle animated border */}
+            <div
+              className="absolute inset-0 rounded-3xl border border-foreground/10 pointer-events-none"
               style={{
-                boxShadow:
-                  "0 0 20px rgba(100, 186, 206, 0.1), inset 0 0 20px rgba(100, 186, 206, 0.05)",
-              }}
-              whileFocus={{
-                boxShadow:
-                  "0 0 30px rgba(100, 186, 206, 0.3), inset 0 0 30px rgba(100, 186, 206, 0.1)",
+                animation: "borderPulse 4s ease-in-out infinite",
               }}
             />
-            <motion.button
-              className="absolute right-2 top-1/2 -translate-y-1/2 w-12 h-12 bg-gradient-to-r from-foreground/80 to-foreground rounded-full flex items-center justify-center text-background hover:from-foreground hover:to-foreground/90 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              style={{
-                boxShadow: "0 0 15px rgba(100, 186, 206, 0.4)",
-              }}
-            >
-              <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M5 12h14M12 5l7 7-7 7" />
-              </svg>
-            </motion.button>
           </div>
         </motion.div>
 
