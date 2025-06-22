@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000b23;
 }
 
 @theme inline {
@@ -10,12 +10,14 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* 64BACE,000719,00284B,000B23,00091E */
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #000b23;
+    --foreground: #64bace;
   }
 }
 
@@ -23,4 +25,32 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes slide-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(calc(100vw + 100%));
+  }
+}
+
+@keyframes slide-left {
+  0% {
+    transform: translateX(calc(100vw + 100%));
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-slide-right {
+  animation: slide-right linear infinite;
+  will-change: transform;
+}
+
+.animate-slide-left {
+  animation: slide-left linear infinite;
+  will-change: transform;
 }
