@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import AnimatedNumbersOverlay from "@/components/severanceBg";
+import FloatingNavigation from "@/components/FloatingNavigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -53,6 +54,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${scriptorama.variable} ${manifold.variable} antialiased`}
       >
         <AnimatedNumbersOverlay />
+        <FloatingNavigation />
         {children}
       </body>
     </html>
