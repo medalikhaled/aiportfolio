@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState, useMemo, useCallback, memo } from "react";
+import { useState, memo } from "react";
 import { motion } from "framer-motion";
 import { User, Briefcase, Zap, MessageCircle, Mail } from "lucide-react";
 import { readStreamableValue } from "ai/rsc";
 import { generateAIResponse } from "./actions";
 import { useRouter } from "next/navigation";
-
+  
 const HALEye = memo(function HALEye() {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -139,107 +139,18 @@ const SmallHALIcon = memo(function SmallHALIcon() {
     <div className="w-6 h-6 rounded-full bg-gradient-to-br from-slate-300 to-slate-500 shadow-lg border border-slate-400 flex items-center justify-center">
       <div className="w-4 h-4 rounded-full bg-gradient-to-br from-slate-500 to-slate-700 shadow-inner flex items-center justify-center">
         <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-red-900/40 via-black to-red-900/20 shadow-inner flex items-center justify-center">
-          <div 
+          <div
             className="w-1.5 h-1.5 rounded-full"
             style={{
-              background: "radial-gradient(circle, #ff6b6b 0%, #ff4757 30%, #c44569 60%, #8b0000 100%)",
-              boxShadow: "0 0 4px #ff4757, 0 0 8px #ff3838, inset 0 0 2px #8b0000"
+              background:
+                "radial-gradient(circle, #ff6b6b 0%, #ff4757 30%, #c44569 60%, #8b0000 100%)",
+              boxShadow:
+                "0 0 4px #ff4757, 0 0 8px #ff3838, inset 0 0 2px #8b0000",
             }}
           >
             <div className="w-0.5 h-0.5 rounded-full bg-white/80 ml-0.5 mt-0.5" />
           </div>
         </div>
-      </div>
-    </div>
-  );
-});
-
-const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-
-  const generateRandomNumbers = useCallback((width: number, height: number) => {
-    const rows = [];
-    const charSpacing = 40;
-    const rowHeight = 35;
-    const rowCount = Math.ceil(height / rowHeight);
-    const numbersPerRow = Math.ceil(width / charSpacing);
-
-    for (let i = 0; i < rowCount; i++) {
-      const row = [];
-      for (let j = 0; j < numbersPerRow * 2; j++) {
-        const chars = "0123456789ABCDEF";
-        row.push(chars[Math.floor(Math.random() * chars.length)]);
-      }
-      rows.push(row);
-    }
-    return rows;
-  }, []);
-
-  const numberRows = useMemo(() => {
-    if (dimensions.width === 0 || dimensions.height === 0) return [];
-    return generateRandomNumbers(dimensions.width, dimensions.height);
-  }, [dimensions.width, dimensions.height, generateRandomNumbers]);
-
-  useEffect(() => {
-    const updateDimensions = () => {
-      setDimensions({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    updateDimensions();
-    window.addEventListener("resize", updateDimensions);
-
-    return () => {
-      window.removeEventListener("resize", updateDimensions);
-    };
-  }, []);
-
-  return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden pointer-events-none  z-0">
-      <div className="absolute inset-0 w-full h-full opacity-20">
-        {numberRows.map((row, rowIndex) => (
-          <motion.div
-            key={rowIndex}
-            className="absolute whitespace-nowrap text-foreground text-sm font-mono"
-            style={{
-              top: `${rowIndex * 35}px`,
-              filter:
-                "drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor)",
-              textShadow:
-                "0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor",
-            }}
-            initial={{
-              x: rowIndex % 2 === 0 ? 0 : `-${dimensions.width}px`,
-            }}
-            animate={{
-              x:
-                rowIndex % 2 === 0
-                  ? [0, -dimensions.width]
-                  : [-dimensions.width, 0],
-            }}
-            transition={{
-              duration: 80 + (rowIndex % 6) * 20,
-              repeat: Infinity,
-              ease: "linear",
-              repeatType: "loop",
-            }}
-          >
-            {row.map((char, charIndex) => (
-              <span
-                key={charIndex}
-                className="inline-block text-center"
-                style={{
-                  marginRight: "32px",
-                  width: "16px",
-                }}
-              >
-                {char}
-              </span>
-            ))}
-          </motion.div>
-        ))}
       </div>
     </div>
   );
@@ -302,8 +213,6 @@ export default function Home() {
 
   return (
     <div className="h-screen w-full px-4 flex flex-col relative">
-      <AnimatedNumbersOverlay />
-
       {/* <div className="flex-[0.1] flex items-center justify-center relative z-10 backdrop-blur-lg bg-foreground/10 border-b border-foreground/20 rounded-b-md">
         <h1 className="text-white text-xl font-bold italic font-scriptorama">
           dali khaled - ⴷⴰⵍⵉ
@@ -468,25 +377,35 @@ export default function Home() {
       >
         <div className="flex flex-col gap-4">
           {[
-            { icon: User, label: "Me", color: "from-cyan-500 to-blue-500", path: "/me" },
+            {
+              icon: User,
+              label: "Me",
+              color: "from-cyan-500 to-blue-500",
+              path: "/me",
+            },
             {
               icon: Briefcase,
               label: "Projects",
               color: "from-green-500 to-emerald-500",
-              path: "/projects"
+              path: "/projects",
             },
             {
               icon: Zap,
               label: "Skills",
               color: "from-purple-500 to-violet-500",
-              path: "/skills"
+              path: "/skills",
             },
-            { icon: MessageCircle, label: "Chat", color: "from-pink-500 to-rose-500", path: "/" },
+            {
+              icon: MessageCircle,
+              label: "Chat",
+              color: "from-pink-500 to-rose-500",
+              path: "/",
+            },
             {
               icon: Mail,
               label: "Contact",
               color: "from-orange-500 to-yellow-500",
-              path: "/contact"
+              path: "/contact",
             },
           ].map((item, index) => (
             <motion.button
