@@ -27,6 +27,28 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-manifold), Arial, Helvetica, sans-serif;
+  --sb-track-color: #000719;
+  --sb-thumb-color: #64bace;
+  --sb-size: 5px;
+}
+body::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 4px;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
 }
 
 @keyframes slide-right {
@@ -62,7 +84,8 @@ body {
 }
 
 @keyframes borderPulse {
-  0%, 100% {
+  0%,
+  100% {
     border-color: rgba(255, 255, 255, 0.1);
   }
   50% {
