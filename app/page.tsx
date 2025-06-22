@@ -5,54 +5,85 @@ import { motion } from "framer-motion";
 import { User, Briefcase, Zap, Target, Mail } from "lucide-react";
 
 const HALEye = memo(function HALEye() {
+  const [isHovered, setIsHovered] = useState(false);
+
   return (
-    <div className="relative flex items-center justify-center">
+    <div 
+      className="relative flex items-center justify-center cursor-pointer group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Outer chrome bezel */}
-      <div className="relative w-96 h-96 rounded-full bg-gradient-to-br from-slate-200 via-slate-300 to-slate-500 shadow-2xl border-4 border-slate-400">
+      <div className="relative w-96 h-96 rounded-full bg-gradient-to-br from-slate-200 via-slate-300 to-slate-500 shadow-2xl border-4 border-slate-400 transition-all duration-500 group-hover:shadow-[0_0_60px_rgba(138,43,226,0.4)]">
         {/* Inner chrome ring */}
         <div className="absolute inset-3 rounded-full bg-gradient-to-br from-slate-400 via-slate-500 to-slate-700 shadow-inner">
           {/* Deep lens housing */}
           <div className="absolute inset-6 rounded-full bg-gradient-to-br from-purple-900/80 via-black to-purple-900/60 shadow-inner">
             {/* Glass lens surface */}
-            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-900/40 via-black to-red-900/20 shadow-inner overflow-hidden">
-              {/* Central red eye core */}
+            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-900/40 via-black to-red-900/20 shadow-inner overflow-hidden group-hover:bg-gradient-to-br group-hover:from-violet-900/60 group-hover:via-black group-hover:to-violet-900/40 transition-all duration-500">
+              {/* Central eye core */}
               <div className="absolute top-1/2 left-1/2 w-20 h-20 -translate-x-1/2 -translate-y-1/2">
                 <motion.div
-                  className="w-full h-full rounded-full relative"
+                  className="w-full h-full rounded-full relative transition-all duration-500"
                   style={{
-                    background:
-                      "radial-gradient(circle, #ff6b6b 0%, #ff4757 30%, #c44569 60%, #8b0000 100%)",
-                    boxShadow:
-                      "0 0 40px #ff4757, 0 0 80px #ff3838, 0 0 120px #ff1744, inset 0 0 20px #8b0000",
+                    background: isHovered
+                      ? "radial-gradient(circle, #9d4edd 0%, #7b2cbf 30%, #5a189a 60%, #240046 100%)"
+                      : "radial-gradient(circle, #ff6b6b 0%, #ff4757 30%, #c44569 60%, #8b0000 100%)",
+                    boxShadow: isHovered
+                      ? "0 0 60px #9d4edd, 0 0 120px #7b2cbf, 0 0 180px #5a189a, inset 0 0 30px #240046"
+                      : "0 0 40px #ff4757, 0 0 80px #ff3838, 0 0 120px #ff1744, inset 0 0 20px #8b0000",
                   }}
                   animate={{
-                    scale: [1, 1.05, 1],
+                    scale: isHovered ? [1, 1.08, 1] : [1, 1.05, 1],
                     opacity: [0.9, 1, 0.9],
                   }}
                   transition={{
-                    duration: 4,
+                    duration: isHovered ? 2 : 4,
                     repeat: Infinity,
                     ease: "easeInOut",
                   }}
                 >
                   {/* Bright center core */}
                   <div
-                    className="absolute top-1/2 left-1/2 w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    className="absolute top-1/2 left-1/2 w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500"
                     style={{
-                      background:
-                        "radial-gradient(circle, #ffffff 0%, #ffaaaa 40%, #ff6b6b 100%)",
-                      boxShadow: "0 0 15px #ffffff, 0 0 25px #ff6b6b",
+                      background: isHovered
+                        ? "radial-gradient(circle, #ffffff 0%, #e0aaff 40%, #9d4edd 100%)"
+                        : "radial-gradient(circle, #ffffff 0%, #ffaaaa 40%, #ff6b6b 100%)",
+                      boxShadow: isHovered
+                        ? "0 0 25px #ffffff, 0 0 40px #9d4edd, 0 0 60px #7b2cbf"
+                        : "0 0 15px #ffffff, 0 0 25px #ff6b6b",
                     }}
                   />
+                  
+                  {/* Intense glow effect on hover */}
+                  {isHovered && (
+                    <motion.div
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: "radial-gradient(circle, transparent 30%, rgba(157, 78, 221, 0.3) 70%, rgba(123, 44, 191, 0.6) 100%)",
+                      }}
+                      animate={{
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 0.8, 0.5],
+                      }}
+                      transition={{
+                        duration: 1.5,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                  )}
                 </motion.div>
               </div>
 
               {/* Large curved reflection - top left */}
               <div
-                className="absolute top-8 left-12 w-16 h-32 rounded-full opacity-40"
+                className="absolute top-8 left-12 w-16 h-32 rounded-full opacity-40 transition-all duration-500"
                 style={{
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 50%, transparent 100%)",
+                  background: isHovered
+                    ? "linear-gradient(135deg, rgba(224,170,255,0.9) 0%, rgba(157,78,221,0.4) 50%, transparent 100%)"
+                    : "linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 50%, transparent 100%)",
                   transform: "rotate(-15deg)",
                   filter: "blur(1px)",
                 }}
@@ -60,25 +91,35 @@ const HALEye = memo(function HALEye() {
 
               {/* Secondary reflection - top right */}
               <div
-                className="absolute top-12 right-16 w-8 h-16 rounded-full opacity-30"
+                className="absolute top-12 right-16 w-8 h-16 rounded-full opacity-30 transition-all duration-500"
                 style={{
-                  background:
-                    "linear-gradient(45deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 70%, transparent 100%)",
+                  background: isHovered
+                    ? "linear-gradient(45deg, rgba(224,170,255,0.7) 0%, rgba(157,78,221,0.3) 70%, transparent 100%)"
+                    : "linear-gradient(45deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 70%, transparent 100%)",
                   transform: "rotate(25deg)",
                   filter: "blur(0.5px)",
                 }}
               />
 
               {/* Small highlight reflections */}
-              <div className="absolute top-6 left-20 w-3 h-6 bg-white/50 rounded-full blur-sm opacity-60" />
-              <div className="absolute top-16 right-12 w-2 h-4 bg-white/40 rounded-full blur-sm opacity-50" />
+              <div 
+                className={`absolute top-6 left-20 w-3 h-6 rounded-full blur-sm opacity-60 transition-all duration-500 ${
+                  isHovered ? 'bg-violet-300/60' : 'bg-white/50'
+                }`} 
+              />
+              <div 
+                className={`absolute top-16 right-12 w-2 h-4 rounded-full blur-sm opacity-50 transition-all duration-500 ${
+                  isHovered ? 'bg-violet-300/50' : 'bg-white/40'
+                }`} 
+              />
 
               {/* Lens edge highlight */}
               <div
-                className="absolute inset-0 rounded-full"
+                className="absolute inset-0 rounded-full transition-all duration-500"
                 style={{
-                  background:
-                    "conic-gradient(from 45deg, transparent 0%, rgba(255,255,255,0.1) 25%, transparent 50%, rgba(255,255,255,0.05) 75%, transparent 100%)",
+                  background: isHovered
+                    ? "conic-gradient(from 45deg, transparent 0%, rgba(157,78,221,0.15) 25%, transparent 50%, rgba(157,78,221,0.08) 75%, transparent 100%)"
+                    : "conic-gradient(from 45deg, transparent 0%, rgba(255,255,255,0.1) 25%, transparent 50%, rgba(255,255,255,0.05) 75%, transparent 100%)",
                 }}
               />
             </div>
