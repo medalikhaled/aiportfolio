@@ -2,9 +2,10 @@
 
 import { useEffect, useState, useMemo, useCallback, memo } from "react";
 import { motion } from "framer-motion";
-import { User, Briefcase, Zap, Target, Mail } from "lucide-react";
+import { User, Briefcase, Zap, MessageCircle, Mail } from "lucide-react";
 import { readStreamableValue } from "ai/rsc";
 import { generateAIResponse } from "./actions";
+import { useRouter } from "next/navigation";
 
 const HALEye = memo(function HALEye() {
   const [isHovered, setIsHovered] = useState(false);
@@ -133,6 +134,26 @@ const HALEye = memo(function HALEye() {
   );
 });
 
+const SmallHALIcon = memo(function SmallHALIcon() {
+  return (
+    <div className="w-6 h-6 rounded-full bg-gradient-to-br from-slate-300 to-slate-500 shadow-lg border border-slate-400 flex items-center justify-center">
+      <div className="w-4 h-4 rounded-full bg-gradient-to-br from-slate-500 to-slate-700 shadow-inner flex items-center justify-center">
+        <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-br from-red-900/40 via-black to-red-900/20 shadow-inner flex items-center justify-center">
+          <div 
+            className="w-1.5 h-1.5 rounded-full"
+            style={{
+              background: "radial-gradient(circle, #ff6b6b 0%, #ff4757 30%, #c44569 60%, #8b0000 100%)",
+              boxShadow: "0 0 4px #ff4757, 0 0 8px #ff3838, inset 0 0 2px #8b0000"
+            }}
+          >
+            <div className="w-0.5 h-0.5 rounded-full bg-white/80 ml-0.5 mt-0.5" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -176,7 +197,7 @@ const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
   }, []);
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden pointer-events-none z-0">
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden pointer-events-none  z-0">
       <div className="absolute inset-0 w-full h-full opacity-20">
         {numberRows.map((row, rowIndex) => (
           <motion.div
@@ -231,6 +252,11 @@ export default function Home() {
   >([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isChatMode, setIsChatMode] = useState(false);
+  const router = useRouter();
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -275,7 +301,7 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-full flex flex-col relative">
+    <div className="h-screen w-full px-4 flex flex-col relative">
       <AnimatedNumbersOverlay />
 
       {/* <div className="flex-[0.1] flex items-center justify-center relative z-10 backdrop-blur-lg bg-foreground/10 border-b border-foreground/20 rounded-b-md">
@@ -295,69 +321,52 @@ export default function Home() {
             <HALEye />
           </motion.div>
         ) : (
-          /* Split layout when in chat mode */
+          /* Full width chat when in chat mode */
           <motion.div
-            className="w-full h-full flex"
+            className="w-full h-full flex flex-col justify-center px-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            {/* HAL Eye Container - Left Side */}
-            <motion.div
-              className="w-1/3 flex items-center justify-center"
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, ease: "easeInOut" }}
-            >
-              <HALEye />
-            </motion.div>
-
-            {/* Chat Response Area - Right Side */}
-            <motion.div
-              className="w-2/3 h-full flex flex-col justify-center px-8"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <div className="h-96 flex flex-col">
-                <div className="flex-1 overflow-y-auto space-y-4 pr-2">
-                  {messages.map((message, index) => (
-                    <motion.div
-                      key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: index * 0.1 }}
-                      className={`${
-                        message.role === "user" ? "text-right" : "text-left"
+            <div className="h-96 flex flex-col max-w-4xl mx-auto w-full">
+              <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+                {messages.map((message, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`${
+                      message.role === "user" ? "text-right" : "text-left"
+                    }`}
+                  >
+                    <div
+                      className={`inline-block max-w-[80%] p-3 rounded-2xl ${
+                        message.role === "user"
+                          ? "bg-blue-500/20 text-foreground"
+                          : "bg-foreground/10 text-foreground"
                       }`}
                     >
-                      <div
-                        className={`inline-block max-w-[80%] p-3 rounded-2xl ${
-                          message.role === "user"
-                            ? "bg-blue-500/20 text-foreground"
-                            : "bg-foreground/10 text-foreground"
-                        }`}
-                      >
-                        <div className="text-xs font-medium mb-1 opacity-70">
-                          {message.role === "user" ? "You" : "DALI 9000"}
-                        </div>
-                        <div className="whitespace-pre-wrap text-sm">
-                          {message.content}
-                          {message.role === "assistant" &&
-                            message.content === "" && (
-                              <motion.div
-                                className="inline-block w-2 h-4 bg-foreground/60 ml-1"
-                                animate={{ opacity: [0, 1, 0] }}
-                                transition={{ duration: 1, repeat: Infinity }}
-                              />
-                            )}
-                        </div>
+                      <div className="flex items-center gap-2 text-xs font-medium mb-1 opacity-70">
+                        {message.role === "assistant" && <SmallHALIcon />}
+                        {message.role === "user" ? "You" : "DALI 9000"}
                       </div>
-                    </motion.div>
-                  ))}
-                </div>
+                      <div className="whitespace-pre-wrap text-sm">
+                        {message.content}
+                        {message.role === "assistant" &&
+                          message.content === "" && (
+                            <motion.div
+                              className="inline-block w-2 h-4 bg-foreground/60 ml-1"
+                              animate={{ opacity: [0, 1, 0] }}
+                              transition={{ duration: 1, repeat: Infinity }}
+                            />
+                          )}
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
               </div>
-            </motion.div>
+            </div>
           </motion.div>
         )}
       </div>
@@ -366,7 +375,7 @@ export default function Home() {
       <div className="flex-[0.2] flex flex-col items-center justify-center relative z-10 px-8 pb-8">
         {/* Enhanced Input Section */}
         <motion.div
-          className="w-full max-w-4xl mb-8 relative z-20"
+          className="w-full max-w-4xl relative z-20"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -448,41 +457,47 @@ export default function Home() {
             />
           </form>
         </motion.div>
+      </div>
 
-        {/* Navigation Buttons */}
-        <motion.div
-          className="flex gap-4 flex-wrap justify-center"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-        >
+      {/* Floating Navigation - Middle Left */}
+      <motion.div
+        className="fixed left-8 top-1/2 -translate-y-1/2 z-30"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.7 }}
+      >
+        <div className="flex flex-col gap-4">
           {[
-            { icon: User, label: "Me", color: "from-cyan-500 to-blue-500" },
+            { icon: User, label: "Me", color: "from-cyan-500 to-blue-500", path: "/me" },
             {
               icon: Briefcase,
               label: "Projects",
               color: "from-green-500 to-emerald-500",
+              path: "/projects"
             },
             {
               icon: Zap,
               label: "Skills",
               color: "from-purple-500 to-violet-500",
+              path: "/skills"
             },
-            { icon: Target, label: "Fun", color: "from-pink-500 to-rose-500" },
+            { icon: MessageCircle, label: "Chat", color: "from-pink-500 to-rose-500", path: "/" },
             {
               icon: Mail,
               label: "Contact",
               color: "from-orange-500 to-yellow-500",
+              path: "/contact"
             },
           ].map((item, index) => (
             <motion.button
               key={item.label}
-              className="group cursor-pointer relative flex flex-col items-center justify-center w-20 h-20 bg-background/10 backdrop-blur-lg border border-foreground/20 rounded-2xl hover:border-foreground/40 transition-all duration-300"
+              onClick={() => handleNavigation(item.path)}
+              className="group cursor-pointer relative flex flex-col items-center justify-center w-18 h-18 bg-background/10 backdrop-blur-lg border border-foreground/20 rounded-2xl hover:border-foreground/40 transition-all duration-300 px-2 py-2"
               style={{
                 boxShadow: "0 0 15px rgba(100, 186, 206, 0.1)",
               }}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
               whileHover={{
                 scale: 1.05,
@@ -492,24 +507,24 @@ export default function Home() {
             >
               {/* Animated background gradient on hover */}
               <motion.div
-                className={`absolute  inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-20 transition-opacity duration-300`}
                 initial={false}
               />
 
               {/* Icon */}
               <motion.div
-                className="mb-1"
+                className="mb-1.5"
                 whileHover={{ scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
               >
                 <item.icon
-                  size={24}
+                  size={18}
                   className="text-foreground/90 group-hover:text-foreground transition-colors duration-300"
                 />
               </motion.div>
 
               {/* Label */}
-              <span className="text-xs text-foreground/80 group-hover:text-foreground transition-colors duration-300 font-medium">
+              <span className="text-xs text-foreground/80 group-hover:text-foreground transition-colors duration-300 font-medium text-center leading-tight">
                 {item.label}
               </span>
 
@@ -522,8 +537,8 @@ export default function Home() {
               />
             </motion.button>
           ))}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
