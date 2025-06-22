@@ -3,6 +3,86 @@
 import { useEffect, useState, useMemo, useCallback, memo } from "react";
 import { motion } from "framer-motion";
 
+const HALEye = memo(function HALEye() {
+  return (
+    <div className="relative flex items-center justify-center">
+      {/* Outer chrome bezel */}
+      <div className="relative w-96 h-96 rounded-full bg-gradient-to-br from-slate-200 via-slate-300 to-slate-500 shadow-2xl border-4 border-slate-400">
+        {/* Inner chrome ring */}
+        <div className="absolute inset-3 rounded-full bg-gradient-to-br from-slate-400 via-slate-500 to-slate-700 shadow-inner">
+          {/* Deep lens housing */}
+          <div className="absolute inset-6 rounded-full bg-gradient-to-br from-purple-900/80 via-black to-purple-900/60 shadow-inner">
+            {/* Glass lens surface */}
+            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-900/40 via-black to-red-900/20 shadow-inner overflow-hidden">
+              
+              {/* Central red eye core */}
+              <div className="absolute top-1/2 left-1/2 w-20 h-20 -translate-x-1/2 -translate-y-1/2">
+                <motion.div
+                  className="w-full h-full rounded-full relative"
+                  style={{
+                    background: "radial-gradient(circle, #ff6b6b 0%, #ff4757 30%, #c44569 60%, #8b0000 100%)",
+                    boxShadow: "0 0 40px #ff4757, 0 0 80px #ff3838, 0 0 120px #ff1744, inset 0 0 20px #8b0000",
+                  }}
+                  animate={{
+                    scale: [1, 1.05, 1],
+                    opacity: [0.9, 1, 0.9],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                >
+                  {/* Bright center core */}
+                  <div 
+                    className="absolute top-1/2 left-1/2 w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full"
+                    style={{
+                      background: "radial-gradient(circle, #ffffff 0%, #ffaaaa 40%, #ff6b6b 100%)",
+                      boxShadow: "0 0 15px #ffffff, 0 0 25px #ff6b6b",
+                    }}
+                  />
+                </motion.div>
+              </div>
+
+              {/* Large curved reflection - top left */}
+              <div 
+                className="absolute top-8 left-12 w-16 h-32 rounded-full opacity-40"
+                style={{
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.3) 50%, transparent 100%)",
+                  transform: "rotate(-15deg)",
+                  filter: "blur(1px)",
+                }}
+              />
+              
+              {/* Secondary reflection - top right */}
+              <div 
+                className="absolute top-12 right-16 w-8 h-16 rounded-full opacity-30"
+                style={{
+                  background: "linear-gradient(45deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.2) 70%, transparent 100%)",
+                  transform: "rotate(25deg)",
+                  filter: "blur(0.5px)",
+                }}
+              />
+
+              {/* Small highlight reflections */}
+              <div className="absolute top-6 left-20 w-3 h-6 bg-white/50 rounded-full blur-sm opacity-60" />
+              <div className="absolute top-16 right-12 w-2 h-4 bg-white/40 rounded-full blur-sm opacity-50" />
+              
+              {/* Lens edge highlight */}
+              <div 
+                className="absolute inset-0 rounded-full"
+                style={{
+                  background: "conic-gradient(from 45deg, transparent 0%, rgba(255,255,255,0.1) 25%, transparent 50%, rgba(255,255,255,0.05) 75%, transparent 100%)",
+                }}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+
 const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
 
@@ -107,9 +187,7 @@ export default function Home() {
 
       {/* Middle Row - ~70% height */}
       <div className="flex-[0.7] flex items-center justify-center relative z-10">
-        <h2 className="text-foreground text-2xl font-bold">
-          Main Content Area
-        </h2>
+        <HALEye />
       </div>
 
       {/* Bottom Row - ~20% height */}

@@ -56,3 +56,7 @@ body {
   animation: slide-left linear infinite;
   will-change: transform;
 }
+
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
