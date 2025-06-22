@@ -54,16 +54,19 @@ const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
             className="absolute whitespace-nowrap text-foreground text-sm font-mono"
             style={{
               top: `${rowIndex * 35}px`,
-              filter: "drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor)",
-              textShadow: "0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor",
+              filter:
+                "drop-shadow(0 0 10px currentColor) drop-shadow(0 0 20px currentColor)",
+              textShadow:
+                "0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor",
             }}
             initial={{
-              x: rowIndex % 2 === 0 ? 0 : `-${dimensions.width}px`
+              x: rowIndex % 2 === 0 ? 0 : `-${dimensions.width}px`,
             }}
             animate={{
-              x: rowIndex % 2 === 0 
-                ? [0, -dimensions.width]
-                : [-dimensions.width, 0]
+              x:
+                rowIndex % 2 === 0
+                  ? [0, -dimensions.width]
+                  : [-dimensions.width, 0],
             }}
             transition={{
               duration: 80 + (rowIndex % 6) * 20,
@@ -76,9 +79,9 @@ const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
               <span
                 key={charIndex}
                 className="inline-block text-center"
-                style={{ 
-                  marginRight: '32px',
-                  width: '16px',
+                style={{
+                  marginRight: "32px",
+                  width: "16px",
                 }}
               >
                 {char}
@@ -96,8 +99,7 @@ export default function Home() {
     <div className="h-screen w-full flex flex-col relative">
       <AnimatedNumbersOverlay />
 
-      {/* Top Row - ~10% height */}
-      <div className="flex-[0.1] flex items-center justify-center relative z-10">
+      <div className="flex-[0.1] flex items-center justify-center relative z-10 backdrop-blur-lg bg-foreground/10 border-b border-foreground/20 rounded-b-md">
         <h1 className="text-white text-xl font-bold">Top Section</h1>
       </div>
 
