@@ -100,7 +100,9 @@ export default function Home() {
       <AnimatedNumbersOverlay />
 
       <div className="flex-[0.1] flex items-center justify-center relative z-10 backdrop-blur-lg bg-foreground/10 border-b border-foreground/20 rounded-b-md">
-        <h1 className="text-white text-xl font-bold">Top Section</h1>
+        <h1 className="text-white text-xl font-bold italic font-scriptorama">
+          dali khaled - ⴷⴰⵍⵉ
+        </h1>
       </div>
 
       {/* Middle Row - ~70% height */}
