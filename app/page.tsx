@@ -15,15 +15,15 @@ const HALEye = memo(function HALEye() {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Outer chrome bezel */}
-      <div className="relative w-96 h-96 rounded-full bg-gradient-to-br from-slate-200 via-slate-300 to-slate-500 shadow-2xl border-4 border-slate-400 transition-all duration-500 group-hover:shadow-[0_0_60px_rgba(138,43,226,0.4)]">
+      <div className="relative w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-slate-200 via-slate-300 to-slate-500 shadow-2xl border-2 sm:border-4 border-slate-400 transition-all duration-500 group-hover:shadow-[0_0_60px_rgba(138,43,226,0.4)]">
         {/* Inner chrome ring */}
-        <div className="absolute inset-3 rounded-full bg-gradient-to-br from-slate-400 via-slate-500 to-slate-700 shadow-inner">
+        <div className="absolute inset-1.5 sm:inset-3 rounded-full bg-gradient-to-br from-slate-400 via-slate-500 to-slate-700 shadow-inner">
           {/* Deep lens housing */}
-          <div className="absolute inset-6 rounded-full bg-gradient-to-br from-purple-900/80 via-black to-purple-900/60 shadow-inner">
+          <div className="absolute inset-3 sm:inset-6 rounded-full bg-gradient-to-br from-purple-900/80 via-black to-purple-900/60 shadow-inner">
             {/* Glass lens surface */}
-            <div className="absolute inset-2 rounded-full bg-gradient-to-br from-purple-900/40 via-black to-red-900/20 shadow-inner overflow-hidden group-hover:bg-gradient-to-br group-hover:from-violet-900/60 group-hover:via-black group-hover:to-violet-900/40 transition-all duration-500">
+            <div className="absolute inset-1 sm:inset-2 rounded-full bg-gradient-to-br from-purple-900/40 via-black to-red-900/20 shadow-inner overflow-hidden group-hover:bg-gradient-to-br group-hover:from-violet-900/60 group-hover:via-black group-hover:to-violet-900/40 transition-all duration-500">
               {/* Central eye core */}
-              <div className="absolute top-1/2 left-1/2 w-20 h-20 -translate-x-1/2 -translate-y-1/2">
+              <div className="absolute top-1/2 left-1/2 w-10 h-10 sm:w-16 sm:h-16 md:w-20 md:h-20 -translate-x-1/2 -translate-y-1/2">
                 <motion.div
                   className="w-full h-full rounded-full relative transition-all duration-500"
                   style={{
@@ -46,7 +46,7 @@ const HALEye = memo(function HALEye() {
                 >
                   {/* Bright center core */}
                   <div
-                    className="absolute top-1/2 left-1/2 w-8 h-8 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500"
+                    className="absolute top-1/2 left-1/2 w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 -translate-x-1/2 -translate-y-1/2 rounded-full transition-all duration-500"
                     style={{
                       background: isHovered
                         ? "radial-gradient(circle, #ffffff 0%, #e0aaff 40%, #9d4edd 100%)"
@@ -81,7 +81,7 @@ const HALEye = memo(function HALEye() {
 
               {/* Large curved reflection - top left */}
               <div
-                className="absolute top-8 left-12 w-16 h-32 rounded-full opacity-40 transition-all duration-500"
+                className="absolute top-4 left-6 w-8 h-16 sm:top-6 sm:left-8 sm:w-12 sm:h-24 md:top-8 md:left-12 md:w-16 md:h-32 rounded-full opacity-40 transition-all duration-500"
                 style={{
                   background: isHovered
                     ? "linear-gradient(135deg, rgba(224,170,255,0.9) 0%, rgba(157,78,221,0.4) 50%, transparent 100%)"
@@ -93,7 +93,7 @@ const HALEye = memo(function HALEye() {
 
               {/* Secondary reflection - top right */}
               <div
-                className="absolute top-12 right-16 w-8 h-16 rounded-full opacity-30 transition-all duration-500"
+                className="absolute top-6 right-8 w-4 h-8 sm:top-8 sm:right-12 sm:w-6 sm:h-12 md:top-12 md:right-16 md:w-8 md:h-16 rounded-full opacity-30 transition-all duration-500"
                 style={{
                   background: isHovered
                     ? "linear-gradient(45deg, rgba(224,170,255,0.7) 0%, rgba(157,78,221,0.3) 70%, transparent 100%)"
@@ -105,12 +105,12 @@ const HALEye = memo(function HALEye() {
 
               {/* Small highlight reflections */}
               <div
-                className={`absolute top-6 left-20 w-3 h-6 rounded-full blur-sm opacity-60 transition-all duration-500 ${
+                className={`absolute top-3 left-10 w-1.5 h-3 sm:top-4 sm:left-14 sm:w-2 sm:h-4 md:top-6 md:left-20 md:w-3 md:h-6 rounded-full blur-sm opacity-60 transition-all duration-500 ${
                   isHovered ? "bg-violet-300/60" : "bg-white/50"
                 }`}
               />
               <div
-                className={`absolute top-16 right-12 w-2 h-4 rounded-full blur-sm opacity-50 transition-all duration-500 ${
+                className={`absolute top-8 right-6 w-1 h-2 sm:top-12 sm:right-8 sm:w-1.5 sm:h-3 md:top-16 md:right-12 md:w-2 md:h-4 rounded-full blur-sm opacity-50 transition-all duration-500 ${
                   isHovered ? "bg-violet-300/50" : "bg-white/40"
                 }`}
               />
@@ -205,9 +205,9 @@ export default function Home() {
   };
 
   return (
-    <div className="h-screen w-full px-4 flex flex-col relative">
+    <div className="h-screen w-full px-2 sm:px-4 flex flex-col relative">
       {/* Middle Row - ~70% height */}
-      <div className="flex-[0.8] flex items-center justify-center relative z-10 overflow-hidden">
+      <div className="flex-[0.8] flex items-center justify-center relative z-10 overflow-hidden py-4 sm:py-0">
         {!isChatMode ? (
           <motion.div
             className="flex items-center justify-center"
@@ -219,13 +219,13 @@ export default function Home() {
         ) : (
           /* Full width chat when in chat mode */
           <motion.div
-            className="w-full h-full flex flex-col justify-center px-8"
+            className="w-full h-full flex flex-col justify-center px-2 sm:px-4 md:px-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <div className="h-96 flex flex-col max-w-4xl mx-auto w-full">
-              <div className="flex-1 overflow-y-auto space-y-4 pr-2">
+            <div className="h-64 sm:h-80 md:h-96 flex flex-col max-w-4xl mx-auto w-full">
+              <div className="flex-1 overflow-y-auto space-y-3 sm:space-y-4 pr-1 sm:pr-2">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
@@ -237,17 +237,17 @@ export default function Home() {
                     }`}
                   >
                     <div
-                      className={`inline-block max-w-[80%] p-3 rounded-2xl ${
+                      className={`inline-block max-w-[85%] sm:max-w-[80%] p-2 sm:p-3 rounded-xl sm:rounded-2xl ${
                         message.role === "user"
                           ? "bg-blue-500/20 text-foreground"
                           : "bg-foreground/10 text-foreground"
                       }`}
                     >
-                      <div className="flex items-center gap-2 text-xs font-medium mb-1 opacity-70">
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-xs font-medium mb-1 opacity-70">
                         {message.role === "assistant" && <SmallHALIcon />}
                         {message.role === "user" ? "You" : "DALI 9000"}
                       </div>
-                      <div className="whitespace-pre-wrap text-sm">
+                      <div className="whitespace-pre-wrap text-xs sm:text-sm">
                         {message.content}
                         {message.role === "assistant" &&
                           message.content === "" && (
@@ -268,7 +268,7 @@ export default function Home() {
       </div>
 
       {/* Bottom Row - ~30% height */}
-      <div className="flex-[0.2] flex flex-col items-center justify-center relative z-10 px-8 pb-8">
+      <div className="flex-[0.2] flex flex-col items-center justify-center relative z-10 px-2 sm:px-4 md:px-8 pb-4 sm:pb-8">
         {/* Enhanced Input Section */}
         <motion.div
           className="w-full max-w-4xl relative z-20"
@@ -278,14 +278,14 @@ export default function Home() {
         >
           <form onSubmit={handleSubmit} className="relative group">
             {/* Glowing border effect */}
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-3xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
+            <div className="absolute -inset-0.5 sm:-inset-1 bg-gradient-to-r from-cyan-500/20 via-blue-500/20 to-purple-500/20 rounded-2xl sm:rounded-3xl blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none" />
 
-            <div className="relative bg-background/15 backdrop-blur-xl border border-foreground/30 rounded-3xl p-1 shadow-2xl">
+            <div className="relative bg-background/15 backdrop-blur-xl border border-foreground/30 rounded-2xl sm:rounded-3xl p-0.5 sm:p-1 shadow-2xl">
               <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask DALI 9000 anything... Share your thoughts, questions, or ideas..."
-                className="w-full h-32 px-8 py-6 pr-20 bg-transparent text-foreground placeholder-foreground/50 focus:outline-none resize-none text-lg leading-relaxed relative z-10"
+                className="w-full h-20 sm:h-24 md:h-32 px-4 sm:px-6 md:px-8 py-3 sm:py-4 md:py-6 pr-16 sm:pr-20 bg-transparent text-foreground placeholder-foreground/50 focus:outline-none resize-none text-sm sm:text-base md:text-lg leading-relaxed relative z-10"
                 style={{
                   fontFamily: "system-ui, -apple-system, sans-serif",
                 }}
@@ -302,7 +302,7 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isLoading || !input.trim()}
-                className="absolute right-4 bottom-4 w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
+                className="absolute right-2 sm:right-3 md:right-4 bottom-2 sm:bottom-3 md:bottom-4 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-cyan-500 via-blue-500 to-purple-600 rounded-xl sm:rounded-2xl flex items-center justify-center text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 active:scale-95 z-10 disabled:opacity-50 disabled:cursor-not-allowed"
                 style={{
                   boxShadow: "0 8px 25px rgba(59, 130, 246, 0.3)",
                 }}
@@ -321,8 +321,9 @@ export default function Home() {
                   <div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                 ) : (
                   <svg
-                    width="24"
-                    height="24"
+                    width="16"
+                    height="16"
+                    className="sm:w-5 sm:h-5 md:w-6 md:h-6"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -335,18 +336,18 @@ export default function Home() {
                 )}
 
                 {/* Button glow effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
               </button>
 
               {/* Character count or status indicator */}
-              <div className="absolute left-8 bottom-4 text-xs text-foreground/40 font-medium pointer-events-none">
+              <div className="absolute left-4 sm:left-6 md:left-8 bottom-2 sm:bottom-3 md:bottom-4 text-xs text-foreground/40 font-medium pointer-events-none">
                 {isLoading ? "Processing..." : "Ready to assist"}
               </div>
             </div>
 
             {/* Subtle animated border */}
             <div
-              className="absolute inset-0 rounded-3xl border border-foreground/10 pointer-events-none"
+              className="absolute inset-0 rounded-2xl sm:rounded-3xl border border-foreground/10 pointer-events-none"
               style={{
                 animation: "borderPulse 4s ease-in-out infinite",
               }}
