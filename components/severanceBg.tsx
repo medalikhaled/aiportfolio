@@ -16,8 +16,13 @@ const AnimatedNumbersOverlay = memo(function AnimatedNumbersOverlay() {
     for (let i = 0; i < rowCount; i++) {
       const row = [];
       for (let j = 0; j < numbersPerRow * 2; j++) {
-        const chars = "0123456789ABCDEF";
-        row.push(chars[Math.floor(Math.random() * chars.length)]);
+        // const chars = "0123456789ABCDEF";
+        const AmazighiChars =
+          "ⴰⴱⴲⴳⴴⴵⴶⴷⴸⴹⴺⴻⴼⴽⴾⴿⵀⵁⵂⵃⵄⵅⵆⵇⵈⵉⵊⵋⵌⵍⵎⵏⵐⵑⵒⵓⵔⵕⵖⵗⵘⵙⵚⵛⵜⵝⵞⵟⵠⵡⵢⵣⵤⵥⵦⵧⵯ";
+
+        row.push(
+          AmazighiChars[Math.floor(Math.random() * AmazighiChars.length)]
+        );
       }
       rows.push(row);
     }
